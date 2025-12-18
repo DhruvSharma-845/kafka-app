@@ -1,0 +1,29 @@
+# k8s/apps/producer-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-app
+  namespace: app-cluster
+  labels:
+    app: consumer-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer-app
+  template:
+    metadata:
+      labels:
+        app: consumer-app
+    spec:
+      containers:
+        - name: consumer
+          image: localhost/consumer-app:latest
+          imagePullPolicy: Never
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

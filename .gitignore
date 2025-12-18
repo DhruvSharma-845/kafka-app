@@ -1,0 +1,4 @@
+*.tar
+**/target/**
+
+.DS_Store
