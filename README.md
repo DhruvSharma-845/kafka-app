@@ -28,7 +28,7 @@ A distributed messaging system built with **Apache Kafka**, **Spring Boot**, and
 
 Before starting, ensure you have the following installed:
 
-- **Docker** — [Install Docker](https://docs.docker.com/get-docker/)
+- **Podman** — [Install Podman](https://podman.io/)
 - **Kind** — [Install Kind](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 - **kubectl** — [Install kubectl](https://kubernetes.io/docs/tasks/tools/)
 - **Java 21** (optional, for local development)
@@ -61,13 +61,13 @@ kubectl apply -f app-cluster/k8s-namespace.yaml
 ```bash
 # Deploy PVC, Service, and StatefulSet
 kubectl apply -f app-cluster/kafka/configmap.yaml
-kubectl apply -f app-cluster/kafka/pvc.yaml
 kubectl apply -f app-cluster/kafka/service.yaml
 kubectl apply -f app-cluster/kafka/statefulset.yaml
-
 ```
 
-### 4. Build Docker Images
+It deploys 3 kafka brokers.
+
+### 4. Build Container Images
 
 ```bash
 # Build Producer
@@ -95,6 +95,8 @@ kubectl apply -f app-cluster/apps/consumer-deployment.yaml
 # Verify deployments
 kubectl get pods -n app-cluster
 ```
+
+One producer and 3 consumers will get deployed.
 
 ---
 
@@ -131,7 +133,7 @@ curl -X POST http://localhost:8080/api/kafka/publish/my-topic \
 **Consume messages from a topic**
 
 ```http
-GET /api/kafka/consume/{topic}
+GET /api/kafka/consume
 ```
 
 **Example:**
@@ -141,8 +143,10 @@ GET /api/kafka/consume/{topic}
 kubectl port-forward deploy/consumer-app 8082:8080 -n app-cluster &
 
 # Consume messages
-curl http://localhost:8081/api/kafka/consume/my-topic
+curl http://localhost:8081/api/kafka/consume
 ```
+
+It reads from the configured topic.
 
 ---
 
