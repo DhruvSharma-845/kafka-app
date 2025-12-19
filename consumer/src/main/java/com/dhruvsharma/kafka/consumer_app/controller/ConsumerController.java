@@ -3,7 +3,6 @@ package com.dhruvsharma.kafka.consumer_app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +20,9 @@ public class ConsumerController {
         this.consumerService = consumerService;
     }
 
-    @GetMapping("/consume/{topic}")
-    public ResponseEntity<MessageResponse> consumeFromTopic(@PathVariable String topic) {
-        MessageResponse response = consumerService.consumeFromTopic(topic);
+    @GetMapping("/consume")
+    public ResponseEntity<MessageResponse> consume() {
+        MessageResponse response = consumerService.consume();
         return ResponseEntity.ok(response);
     }
 }

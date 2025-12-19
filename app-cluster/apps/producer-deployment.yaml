@@ -16,10 +16,14 @@ spec:
       labels:
         app: producer-app
     spec:
+      dnsPolicy: ClusterFirst
       containers:
         - name: producer
           image: localhost/producer-app:latest
           imagePullPolicy: Never
+          env:
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-0.kafka-headless.app-cluster.svc.cluster.local:9092,kafka-1.kafka-headless.app-cluster.svc.cluster.local:9092,kafka-2.kafka-headless.app-cluster.svc.cluster.local:9092"
           resources:
             requests:
               memory: "128Mi"

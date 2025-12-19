@@ -7,7 +7,7 @@ metadata:
   labels:
     app: consumer-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: consumer-app
@@ -20,6 +20,13 @@ spec:
         - name: consumer
           image: localhost/consumer-app:latest
           imagePullPolicy: Never
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-0.kafka-headless.app-cluster.svc.cluster.local:9092,kafka-1.kafka-headless.app-cluster.svc.cluster.local:9092,kafka-2.kafka-headless.app-cluster.svc.cluster.local:9092"
           resources:
             requests:
               memory: "128Mi"
