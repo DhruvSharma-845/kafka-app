@@ -1,0 +1,23 @@
+asyncapi: "3.0.0"
+info:
+  title: Kafka Messaging
+  version: "1.0.0"
+  description: AsyncAPI contract for messages published to/consumed from Kafka.
+channels:
+  kafka.message:
+    messages:
+      KafkaMessage:
+        payload:
+          type: object
+          required:
+            - key
+            - message
+          properties:
+            key:
+              type: string
+              minLength: 1
+              description: Message key used for partitioning.
+            message:
+              type: string
+              minLength: 1
+              description: The textual payload delivered to consumers.
